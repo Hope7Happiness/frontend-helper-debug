@@ -46,6 +46,12 @@ npm run dev
 - `artifacts/demo-trace.fhtrace.json`：自动化测试生成的示例 trace。
 - `skills/frontend-helper-debug`：让 Codex 接入 Frontend Helper 并按 ID 分析轨迹的 Skill。
 
+## Manual mode
+
+不使用 Vite 的 Flask、Django、FastAPI、服务端渲染 HTML 或静态开发站点也可以接入。Skill 的手动模式会指导 agent：在开发模板中注入浏览器 runtime，并在现有 Python/其他后端上实现同一组 trace API。后端语言不影响浏览器录制器；需要变化的是注入位置和 API adapter。
+
+详见 [`skills/frontend-helper-debug/references/manual.md`](skills/frontend-helper-debug/references/manual.md)。
+
 ## Trace API
 
 ```text

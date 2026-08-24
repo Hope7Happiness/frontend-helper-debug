@@ -1,13 +1,22 @@
 ---
 name: frontend-helper-debug
-description: Add Frontend Helper's dev-only interaction recorder and trace API to Vite frontends, then list, name, retrieve, inspect, or delete version-pinned traces by ID. Use when Codex creates or modifies a local frontend that should let a person demonstrate UI bugs to an agent, when a user provides an fh_ trace ID, or when debugging recorded clicks, DOM changes, element annotations, and the service version active during recording.
+description: Add Frontend Helper's dev-only interaction recorder to Vite or manually integrated frontends, implement or use its trace API, and inspect version-pinned traces by ID. Use when Codex creates or modifies a local frontend that should let a person demonstrate UI bugs to an agent, when a user provides an fh_ trace ID, or when debugging recorded clicks, DOM changes, element annotations, and the service version active during recording.
 ---
 
 # Frontend Helper Debug
 
 Add the recorder as development infrastructure, never as application UI or production code. Let a person record the bug, receive a short trace ID, and give that ID to the agent.
 
-## Add Frontend Helper
+## Choose an integration mode
+
+Keep Frontend Helper development-only. Choose the narrowest integration that matches the project:
+
+- **Vite frontend:** read [references/vite.md](references/vite.md), install `@frontend-helper/vite`, and use the automatic plugin.
+- **Non-Vite frontend or server-rendered Python app:** read [references/manual.md](references/manual.md). Manually load the browser runtime from the project's asset pipeline and implement the trace API on the existing development server.
+
+The recorder is browser-side and backend-language agnostic. Python, Node, Go, or another server can receive the same JSON API; only the injection and server adapter change.
+
+## Add Frontend Helper to Vite
 
 1. Inspect the package manager, build tool, dev command, and existing Vite config.
 2. Read [references/vite.md](references/vite.md) for the supported integration and API contract.
@@ -17,7 +26,19 @@ Add the recorder as development infrastructure, never as application UI or produ
 6. Start the dev server and confirm the overlay appears only there. Use `Alt+Shift+H` to show or hide it.
 7. Run the production build and confirm Frontend Helper client code is absent.
 
-Do not claim non-Vite support. For another build system, implement the same API contract only when the user asks for a new adapter.
+Do not claim automatic Vite integration for non-Vite projects. For another build system, follow the manual mode below and implement the same API contract only when the user asks for that integration.
+
+## Add Frontend Helper manually
+
+For Flask, Django, FastAPI, server-rendered HTML, or another non-Vite frontend:
+
+1. Inspect the development template/static-asset path and the server's debug guard.
+2. Read [references/manual.md](references/manual.md).
+3. Load the browser `mount` entry only in development, using the project's JavaScript asset pipeline. Pass the same-origin trace endpoint.
+4. Add the five trace routes to the existing development server. Preserve the stored trace shape, request limit, ID format, rename/delete behavior, and service-version pinning described in the reference.
+5. Verify the overlay, recording, nested/page scrolling, trace CRUD, and production exclusion before handing off.
+
+Do not add a second recorder implementation in Python. Do not expose the trace API or helper runtime in production.
 
 ## Inspect a Trace ID
 

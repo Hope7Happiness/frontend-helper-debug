@@ -1,4 +1,4 @@
 interface:
   display_name: "Frontend Helper Debug"
-  short_description: "Add dev recording and inspect versioned traces by ID"
-  default_prompt: "Use $frontend-helper-debug to add dev-only recording, list version-pinned traces, and inspect a trace by ID."
+  short_description: "Add dev recording to Vite or manual frontends"
+  default_prompt: "Use $frontend-helper-debug to add dev-only recording to a Vite or manually integrated frontend, implement trace CRUD, and inspect a trace by ID."
