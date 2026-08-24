@@ -1,0 +1,16 @@
+{
+  "name": "@frontend-helper/demo",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "build": "tsc --noEmit && vite build",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@frontend-helper/vite": "*",
+    "typescript": "^5.9.2",
+    "vite": "^8.2.1"
+  }
+}
